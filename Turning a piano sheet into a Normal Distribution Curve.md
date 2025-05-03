@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/6fb482aa-9cbc-4098-9adf-b05b86d4bd4d)
+
 # Introduction 
 I started playing the piano at the age of 6. Although I took a 6 year break, I'm now more passionate than ever. With the scientific knowledge I've gained throughout my education, I’ve started to wonder if I can understand music in mathematical terms. <br/>
 <br/>
@@ -12,9 +14,9 @@ Here's what its MIDI file sounds like: [Listen to MIDI He's a Pirate](https://gi
 
 ## An overview of Mido
 Mido, short for MIDI Objects, is a Python library designed to work with MIDI files. It translates familiar music notes like Do, Re, Mi into numbers, turning them into data that can be read and processed. For instance, Do in the 4th octave of a standard piano is represented by the number 60.<br/> 
+<br/> 
 ![image](https://github.com/user-attachments/assets/0c8d02cc-a628-4eef-9286-201f3eac0edb)
 
-<br/> 
 In Mido, a message is an instruction for a note. Here's an example:
 
 ```
@@ -87,13 +89,13 @@ The lowest note of the piece is 21 (La in the 0th octave.). The highest one is 9
 ````
 print(int(np.mean(notes_array)))
 print(int(np.std(notes_array)))
-Output: 65
+Output: 56
 Output: 15
 ````
 The average note is 56 (Sol♯ in the 4th octave). <br/> 
-The standard deviation is 16, ranging in average from the note 50 (Re# in the 4th octave) to 72 (Do in the 5th octave).<br/> 
+The standard deviation is 16, ranging in average from the note 40 (Mi in the 2nd octave) to 72 (Do in the 5th octave).<br/> 
 <br/> 
-With those informations, we can map out a first draft of the Normal Distribution:
+With those informations, we can map out a first draft of the Normal Distribution. Indeed, the amplitude isn't determined yet. It will be studied later.
 
 ## Step 6: Creating a histogram
 We will use Matplotlib to create a histogram.
