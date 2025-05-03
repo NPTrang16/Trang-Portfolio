@@ -12,6 +12,8 @@ Here's what its MIDI file sounds like: [Listen to MIDI He's a Pirate](https://gi
 
 ## An overview of Mido
 Mido, short for MIDI Objects, is a Python library designed to work with MIDI files. It translates familiar music notes like Do, Re, Mi into numbers, turning them into data that can be read and processed. For instance, Do in the 4th octave of a standard piano is represented by the number 60.<br/> 
+![image](https://github.com/user-attachments/assets/0c8d02cc-a628-4eef-9286-201f3eac0edb)
+
 <br/> 
 In Mido, a message is an instruction for a note. Here's an example:
 
