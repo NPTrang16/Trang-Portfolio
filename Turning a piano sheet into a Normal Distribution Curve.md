@@ -6,7 +6,7 @@ I started playing the piano at the age of 6. Although I took a 6 year break, I'm
 This study was made on Jupyter Notebook.
 
 ## What's a MIDI file?
-To get started, in music, a MIDI file (Musical Instrument Digital Interface) is a type of file which contains information about a song—such as which notes to play, their pitch (how high or low they are), and their velocity (how long or short they are played). Unlike MP3 or WAV files, MIDI files don’t contain actual audio. Instead, they store performance data, acting more like sheet music for digital instruments. <br/>
+To get started, in music, a MIDI file (Musical Instrument Digital Interface) is a type of file which contains information about a song—such as which notes to play, their pitch (how high or low they are), and their velocity (how long or short they are played). Unlike MP3 or WAV files, MIDI files don’t contain the actual audio. Instead, they store performance data, acting more like sheet music for digital instruments. <br/>
 <br/>
 Today, I chose to work with a piano MIDI file of the main theme from the movie **Pirates of the Caribbean**, titled _He's a Pirate_. The piece was composed by Geoff Zanelli, Hans Zimmer, and Klaus Badelt and [beautifully covered by nanoMIDI](https://www.youtube.com/watch?v=iEO9WZgYj7s) on YouTube. <br/> 
 <br/> 
