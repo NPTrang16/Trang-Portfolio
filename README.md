@@ -4,4 +4,4 @@ I'm currently majoring in Applied Chemistry and plan to take the next step in my
 
 ## Let's take a look at my projects:
 - [Turning a piano sheet into a Normal Distribution Curve](https://github.com/NPTrang16/Trang-Portfolio/blob/main/1.%20Turning%20a%20piano%20sheet%20into%20a%20Normal%20Distribution%20Curve.md) (NumPy, SciPy Stats, Matplotlib, MIDO)
-- [Frequent Titans Behavior Set Mining](https://github.com/NPTrang16/Trang-Portfolio/blob/main/2.%20Frequent%20Titans%20Behavior%20Set%20Mining.md) (Pandas, Mlxtend for Data Mining)
+- [Frequent Titans Behavior Set Mining in Attack on Titan](https://github.com/NPTrang16/Trang-Portfolio/blob/main/2.%20Frequent%20Titans%20Behavior%20Set%20Mining%20in%20Attack%20on%20Titan.md) (Pandas, Mlxtend for Data Mining)
