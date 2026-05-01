@@ -1,0 +1,220 @@
+#code programmé dans Spyder
+
+import matplotlib.pyplot as plt
+
+huiles = [
+    [1,"Huile d'amande douce", "Prunus Amygdalus Dulcis Oil", 78927, 0.910, 190],
+    [2,"Huile de coco", "Cocos Nucifera Oil", 75444, 0.920, 250],
+    [3,"Beurre de karité", "Butyrospermum Parkii Butter", 84401, 0.900, 185],
+    [4,"Huile d'olive", "Olea Europaea Fruit Oil", 77800, 0.915, 185],
+    [5,"Huile d'avocat", "Persea Gratissima Oil", 79502, 0.920, 198],
+    [6,"Beurre de cacao", "Theobroma Cacao Seed Butter", 60291, 0.890, 200],
+    [7,"Huile de tournesol", "Helianthus Annuus Seed Oil", 34238, 0.920, 190],
+    [8,"Huile de jojoba", "Simmondsia Chinensis Seed Oil", 58617, 0.865, 95],
+    [9,"Huile de colza", "Brassica Napus Seed Oil", 83614, 0.914, 175],
+    [10,"Huile de pépins de raisin", "Vitis Vinifera Seed Oil", 80653, 0.920, 185]
+]
+            
+listeDesSavons = [
+    (1, 'John', 'Doeuf', 'Savon Marseillais', [('Beurre de cacao', 76), ("Huile d'avocat", 75), ('Soude', 30.0)])
+    ]
+
+positionSavon = 1
+listeDesIngredientsUtilises = []
+
+#-----------------------------------------------------------------------------
+
+#FONCTIONS
+#-----------------------------------------------------------------------------
+#fonction créer un savon
+def creerSavon():
+    positionSavon = 1 #initialisation de l'ID du savon dans la listeDesSavons
+    print("Vous allez créer un nouveau savon")
+    
+    prenomLaborantin = input("Votre prénom: ")
+    nomLaborantin = input("Votre nom : ")
+    nomSavon = input("Donnez un nom à votre savon : ")
+    
+    positionSavon = positionSavon+1
+    
+    afficherListeHuile() #fonction afficher la liste des huiles
+    
+    while True:
+        huileIDchoisi = int(input(
+            "Choisissez une huile de la liste (0 pour revenir au menu principal, -1 pour rentrer la soude) : "))
+        
+        if huileIDchoisi == 0:
+            print("Retour au menu principal")
+            break
+        
+        elif 1<= huileIDchoisi <= 10: #si l'user a choisi une huile
+
+            print("Vous avez choisi: ", huiles[huileIDchoisi-1][1]) #confirmer le nom de l'ingrédient
+            masseHuile = float(input("Masse de " + huiles[huileIDchoisi-1][1] + " (en g) :")) #demander la masse d'huile
+            volumeHuile = masseHuile / huiles[huileIDchoisi-1][4] #calculer le volume de l'huile
+            listeDesIngredientsUtilises.append((huiles[huileIDchoisi-1][1], masseHuile)) #ajouter dans la liste des ingrédients
+            print("Utilisation de", huiles[huileIDchoisi-1][1], round( volumeHuile, 2), "mL")
+            
+        elif huileIDchoisi == -1: #faire les calculs de la soude
+            print("Calcul de la soude théorique: ")
+            soudeTheorique = soudeTheoriqueTotale(listeDesIngredientsUtilises,huiles)
+           
+            
+            print("Soude théorique totale: ", round(soudeTheorique,2), " g")
+            
+            demanderSoudeReelle(soudeTheorique) #demander la soude réelle + calcul du taux de graisse + finaliser la soude dans la formulation
+            
+            IngredsSupplementaires() #demander d'ajouter un autre ingrédient si l'user veut
+            
+            listeDesSavons.append((positionSavon, prenomLaborantin,nomLaborantin, nomSavon, listeDesIngredientsUtilises))
+            
+            
+            break #sortir de la boucle pour revenir à la page d'accueil
+            
+            
+        else:
+            print("Erreur: veuillez choisir un nombre entre 0 et 10")
+    
+    #print(listeDesSavons)
+    
+    
+          
+#-----------------------------------------------------------------------------
+
+#fonction afficher la liste des huiles
+def afficherListeHuile ():
+    print("Liste des huiles disponibles : ")
+    for i in huiles: #afficher la liste complète des huiles 
+        print(i[0], "-", i[1])
+#-----------------------------------------------------------------------------
+
+#fonction pour calculer la soude théorique
+def soudeTheoriqueTotale(listeDesIngredientsUtilises,huiles):
+    soudeTotaleTheorique = 0
+    for i in listeDesIngredientsUtilises: #parcourir la liste des ingrédients
+        nomHuileUtilisee = i[0]
+        masseHuileUtilisee = i[1]
+        for x in huiles: #parcourir la liste des huiles initiale pour voir si ca match
+            if x[1] == nomHuileUtilisee:
+                indiceSAP = x[5]
+                soudeIndividuelle = (masseHuileUtilisee*indiceSAP)/1000 
+                print(nomHuileUtilisee, ":", masseHuileUtilisee, "g → NaOH = ", soudeIndividuelle, "g")
+                soudeTotaleTheorique = soudeIndividuelle + soudeTotaleTheorique
+                break
+    return soudeTotaleTheorique
+#-----------------------------------------------------------------------------
+#fonction pour demaRnder la masse de soude réelle
+def demanderSoudeReelle(soudeTheorique):
+    #soudeTheorique = soudeTheoriqueTotale(listeDesIngredientsUtilises,huiles)
+    soudeReelle = None
+    while True:
+        reponseSoude = input("Voulez-vous faire un diagnostique de votre savon?:  ")
+        
+        if reponseSoude.lower() != "non":
+            
+            soudeReelle = float(input("Masse de soude réelle utilisée (en g): "))
+            taux = calculSurgraissage(soudeReelle,soudeTheorique)
+            print("Taux de surgraissage: ", round(taux,2), "%")
+            print(diagnostic(taux))
+        else:
+            listeDesIngredientsUtilises.append(("Soude", soudeReelle))
+            break
+#-----------------------------------------------------------------------------
+#fonction pour calculer le taux de surgraissage
+def calculSurgraissage(soudeReelle,soudeTheorique):
+    return(1-soudeReelle/soudeTheorique)*100
+
+#-----------------------------------------------------------------------------
+#fonction pour diagnostiquer
+def diagnostic(taux):
+    if taux < 0:
+        return("savon caustique")
+    elif taux < 5:
+        return("marge de sécurité non respectée")
+    elif taux < 8:
+        return ("peu surgras")
+    elif taux < 10:
+        return ("surgras (doux, idéal)")
+    elif taux <= 12:
+        return ("très surgras")
+    else:
+        return ("trop riche en huile")
+#-----------------------------------------------------------------------------
+#fonction pour demander des ingrédients supplémentaires
+def IngredsSupplementaires():
+    while True:
+        ingredientQuestion = input("Voulez-vous rajouter un autre ingrédient? ")
+        
+        if ingredientQuestion.lower() != "non":
+            ingredient = input("Nom de l'ingrédient: ")
+            ingredientMasse = float(input("Masse de " + ingredient + " en g: "))
+            print("Ajout de " + str(ingredientMasse) + " g de " + ingredient)
+            listeDesIngredientsUtilises.append((ingredient,ingredientMasse))
+        else:
+            break
+#-----------------------------------------------------------------------------
+#fonction pour afficher tous les savons
+def afficherListeSavons():
+    print("Liste des savons disponibles : ")
+    for i in listeDesSavons:
+        print(
+            i[0], "-",i[3], ": créé par", i[1], i[2]
+            )
+#-----------------------------------------------------------------------------
+#fonction pour afficher le camembert d'un savon
+def afficherCamembertSavon(choixMontrerIndexSavon):
+    compositionSavon = listeDesSavons[choixMontrerIndexSavon-1][4]
+
+    labels = [item[0] for item in compositionSavon] #récuperer le nom des ingrédients
+    values = [item[1] for item in compositionSavon] #récupérer la masse des ingrédients
+
+    totalMasse = sum(values)
+
+    labelsAvecMasseEtPourcentage = [] #création des labels du graphe avec masse et pourcentage
+    
+    for i in compositionSavon: #pour chaque ingredient
+        nomIngredient = i[0]
+        masse = i[1]
+        pourcentage = (masse/totalMasse)*100
+        labelsAvecMasseEtPourcentage.append(
+            nomIngredient + " :" + str(masse) + " g (" + str(round(pourcentage,1)) + "%)"  )
+
+    plt.figure()
+    plt.title("Composition du " + listeDesSavons[choixMontrerIndexSavon-1][3])
+    plt.pie(values, labels = labelsAvecMasseEtPourcentage)
+    plt.show()
+#CODE PRINCIPAL---------------------------------------------------------------
+
+#page menu
+print("***Logiciel d'aide à la création de savon***")
+
+while True: 
+    choix = int(input(
+        "Que voulez-vous faire ?\n1 - Créer un savon\n2 - Récupérer la composition d'un savon\n3 - Quitter\nVotre choix: "
+        ))
+    
+    if choix == 1:
+        creerSavon()
+    
+    elif choix == 2:
+        while True:
+            afficherListeSavons()
+            choixMontrerIndexSavon = int(input(
+                    "Choisissez un savon pour montrer les caractéristiques, ou faire -1 pour revenir au menu: "))
+            if choixMontrerIndexSavon == -1:
+                break #revenir au menu
+            
+            elif 1 <= choixMontrerIndexSavon <= len(listeDesSavons):
+                afficherCamembertSavon(choixMontrerIndexSavon)
+            
+            else:
+                print("Erreur: Veuillez rentrer un index valide")
+              
+           
+        
+    elif choix not in [1,2,3]:
+        print("Erreur: veuillez entrer 1, 2 ou 3")
+        
+    else:
+        print("À bientôt.")
+        break
